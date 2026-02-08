@@ -14,9 +14,18 @@ class Command(BaseCommand):
             self.stdout.write(self.style.WARNING('Superuser credentials not found in environment variables. Skipping creation.'))
             return
 
-        if not User.objects.filter(username=username).exists():
+        user, created = User.objects.get_or_create(username=username)
+        if created:
             self.stdout.write(f'Creating superuser for {username}...')
-            User.objects.create_superuser(username=username, email=email, password=password)
+            user.email = email
+            user.set_password(password)
+            user.is_superuser = True
+            user.is_staff = True
+            user.save()
             self.stdout.write(self.style.SUCCESS('Superuser created successfully.'))
         else:
-            self.stdout.write(self.style.SUCCESS(f'Superuser {username} already exists.'))
+            self.stdout.write(f'Superuser {username} already exists. Updating password and email...')
+            user.email = email
+            user.set_password(password)
+            user.save()
+            self.stdout.write(self.style.SUCCESS('Superuser updated successfully.'))
