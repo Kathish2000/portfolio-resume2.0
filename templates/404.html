@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}404 - Page Not Found{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center -mt-16">
+    <div class="text-center space-y-6 animate-fade-in">
+        <div class="text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+            404
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+            Page Not Found
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+            Oops! The page you're looking for doesn't exist or has been moved.
+        </p>
+        <div class="pt-6">
+            <a href="{% url 'core:home' %}" class="px-8 py-3 bg-primary text-white rounded-lg hover:bg-blue-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 inline-block">
+                <i class="fas fa-home mr-2"></i>
+                Go Home
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

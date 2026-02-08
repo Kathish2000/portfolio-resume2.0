@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Projects - Portfolio{% endblock %}
+
+{% block content %}
+<div class="py-12">
+    <h1 class="text-4xl md:text-5xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+        My Projects
+    </h1>
+    
+    {% if projects %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for project in projects %}
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-2 animate-fade-in">
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-48 object-cover">
+                    {% else %}
+                        <div class="w-full h-48 bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                            <i class="fas fa-code text-white text-5xl"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="p-6">
+                        <h2 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{{ project.title }}</h2>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">{{ project.description }}</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            {% for tech in project.get_tech_stack_list %}
+                                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 rounded-full text-sm">
+                                    {{ tech }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="flex space-x-3">
+                            {% if project.github_link %}
+                                <a href="{{ project.github_link }}" target="_blank" class="flex-1 text-center px-4 py-2 bg-gray-900 dark:bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors">
+                                    <i class="fab fa-github mr-2"></i>Code
+                                </a>
+                            {% endif %}
+                            {% if project.live_link %}
+                                <a href="{{ project.live_link }}" target="_blank" class="flex-1 text-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">
+                                    <i class="fas fa-external-link-alt mr-2"></i>Live
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-16 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+            <i class="fas fa-folder-open text-6xl text-gray-400 mb-4"></i>
+            <p class="text-xl text-gray-600 dark:text-gray-400">No projects added yet. Check back soon!</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

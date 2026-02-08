@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portfolio{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#10b981',
+                        dark: '#0f172a',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-dark dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col font-sans relative overflow-x-hidden">
+
+    <!-- Background Animation Container -->
+    <div id="particles-js" class="fixed inset-0 z-0 pointer-events-none opacity-20 dark:opacity-30"></div>
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="{% url 'core:home' %}" class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary hover:opacity-80 transition-opacity">
+                Portfolio
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="{% url 'core:home' %}" class="nav-link hover:text-primary transition-colors">Home</a>
+                <a href="{% url 'core:about' %}" class="nav-link hover:text-primary transition-colors">About</a>
+                <a href="{% url 'core:experience' %}" class="nav-link hover:text-primary transition-colors">Experience</a>
+                <a href="{% url 'core:projects' %}" class="nav-link hover:text-primary transition-colors">Projects</a>
+                <a href="{% url 'blog:list' %}" class="nav-link hover:text-primary transition-colors">Blog</a>
+                <a href="{% url 'core:contact' %}" class="nav-link hover:text-primary transition-colors">Contact</a>
+                
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors focus:outline-none">
+                    <i class="fas fa-moon dark:hidden text-gray-600"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 dark:text-gray-300 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-dark border-t border-gray-200 dark:border-gray-800 absolute w-full left-0 top-full">
+            <div class="flex flex-col p-4 space-y-3">
+                <a href="{% url 'core:home' %}" class="block py-2 hover:text-primary">Home</a>
+                <a href="{% url 'core:about' %}" class="block py-2 hover:text-primary">About</a>
+                <a href="{% url 'core:experience' %}" class="block py-2 hover:text-primary">Experience</a>
+                <a href="{% url 'core:projects' %}" class="block py-2 hover:text-primary">Projects</a>
+                <a href="{% url 'blog:list' %}" class="block py-2 hover:text-primary">Blog</a>
+                <a href="{% url 'core:contact' %}" class="block py-2 hover:text-primary">Contact</a>
+                <button id="theme-toggle-mobile" class="flex items-center py-2 hover:text-primary">
+                    <span class="mr-2">Toggle Theme</span>
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 relative z-10">
+        {% if messages %}
+            <div class="mb-6 space-y-2">
+                {% for message in messages %}
+                    <div class="p-4 rounded-lg {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-auto py-6 relative z-10 transition-colors duration-300">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-600 dark:text-gray-400">&copy; {% now "Y" %} Kathish. All rights reserved.</p>
+            <div class="mt-4 flex justify-center space-x-4">
+                <a href="#" class="text-gray-500 hover:text-primary text-xl"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-gray-500 hover:text-primary text-xl"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-gray-500 hover:text-primary text-xl"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
