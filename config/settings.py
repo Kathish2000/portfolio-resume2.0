@@ -20,7 +20,8 @@ SECRET_KEY = env('SECRET_KEY', default='django-insecure-default-key-change-me')
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['*', '.onrender.com'] # For local development ease and Render
+ALLOWED_HOSTS = ['*', '.onrender.com', '.railway.app'] # For local, Render, and Railway
+CSRF_TRUSTED_ORIGINS = ['https://*.railway.app', 'https://*.onrender.com']
 
 # Application definition
 
